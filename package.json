@@ -10,9 +10,26 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@react-native-community/netinfo": "^7.1.7",
+    "@react-navigation/native": "^6.0.6",
+    "@react-navigation/stack": "^6.0.11",
+    "axios": "^0.24.0",
+    "lodash": "^4.17.21",
     "react": "17.0.2",
     "react-native": "0.66.4",
-    "react-native-ble-plx": "^2.0.3"
+    "react-native-ble-plx": "^2.0.3",
+    "react-native-confirmation-code-field": "^7.2.0",
+    "react-native-dotenv": "^3.3.1",
+    "react-native-gesture-handler": "^2.1.1",
+    "react-native-modern-datepicker": "^1.0.0-beta.91",
+    "react-native-responsive-screen": "^1.4.2",
+    "react-native-safe-area-context": "^3.3.2",
+    "react-native-sensitive-info": "^5.5.8",
+    "react-native-toast-message": "^2.1.1",
+    "react-redux": "^7.2.6",
+    "redux-persist": "^6.0.0",
+    "redux-persist-sensitive-storage": "^1.0.0",
+    "redux-saga": "^1.1.3"
   },
   "devDependencies": {
     "@babel/core": "^7.16.5",

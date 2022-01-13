@@ -1,0 +1,5 @@
+{
+    "form.phoneFormat.error": "شماره موبایل باید به صورت *********۰۹ و ۱۱ رقم باشد.",
+    "form.emailFormat.error": "ایمیل باید به صورت sample@example.com باشد.",
+    "form.fillTheBlank": "لطفا فیلد های خالی را پر کنید"
+}
