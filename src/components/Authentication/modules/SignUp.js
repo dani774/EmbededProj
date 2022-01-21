@@ -65,8 +65,9 @@ class SignUp extends Component {
   };
 
   handleSignUp = values => {
-    const {requestOTP} = this.props;
-    requestOTP(values, this.handleSuceessSuccessOTP);
+    const {signUp} = this.props;
+    console.log('valueeee', values);
+    signUp(values)
   };
 
   handleSuceessSuccessOTP = async data => {
@@ -95,6 +96,66 @@ class SignUp extends Component {
                     size: 'large',
                     placeholder: translation['form.phoneNumber.placeholder'],
                   },
+                  firstName: {
+                    name: 'firstName',
+                    label: translation['firstName'],
+                    type: 'input',
+                    size: 'large',
+                    placeholder: translation['firstName'],
+                  },
+                  lastName: {
+                    name: 'lastName',
+                    label: translation['familyName'],
+                    type: 'input',
+                    size: 'large',
+                    placeholder: translation['familyName'],
+                  },
+                  password: {
+                    name: 'password',
+                    label: translation['password'],
+                    type: 'input',
+                    size: 'large',
+                    placeholder: translation['password'],
+                  },
+                  gender: {
+                    name: 'gender',
+                    label: translation['gender'],
+                    type: 'input',
+                    size: 'large',
+                    placeholder: translation['gender'],
+                  },
+                  bloodType: {
+                    name: 'bloodType',
+                    label: translation['bloodType'],
+                    type: 'input',
+                    size: 'large',
+                    placeholder: translation['bloodType'],
+                  },
+                  age: {
+                    name: 'age',
+                    label: translation['age'],
+                    type: 'input',
+                    size: 'large',
+                    keyboardType: 'numeric',
+                    placeholder: translation['age'],
+                  },
+                  height: {
+                    name: 'height',
+                    label: translation['height'],
+                    type: 'input',
+                    size: 'large',
+                    keyboardType: 'numeric',
+                    placeholder: translation['height'],
+                  },
+                  weight: {
+                    name: 'weight',
+                    label: translation['weight'],
+                    type: 'input',
+                    size: 'large',
+                    keyboardType: 'numeric',
+                    placeholder: translation['weight'],
+                  },
+
                 }}
                 submitButton={{
                   loading: {url: constants.REQUEST_OTP_URL, requestType: 'post'},
@@ -185,9 +246,6 @@ function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
       signUp: actions.signUp,
-      requestOTP: actions.requestOTP,
-      setSignUp: actions.setSignUp,
-      saveConfirmType: actions.saveConfirmType,
     },
     dispatch,
   );

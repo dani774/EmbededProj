@@ -9,3 +9,11 @@ export const Login = data => ({
   },
 });
 
+export const signUp = values => ({
+  type: constants.SIGNUP,
+  payload: {
+    values,
+  },
+});
+
+

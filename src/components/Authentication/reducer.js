@@ -40,18 +40,6 @@ const defaultState = {
  */
 const AuthReducer = (state = defaultState, action) => {
     switch (action.type) {
-        case constants.IS_AUTHENTICATED:
-            return { ...state, isAuth: action.payload.isAuth };
-        case constants.SET_PATH:
-            return { ...state, path: action.payload.path };
-        // case constants.IS_SHARED:
-        //     return { ...state, isShared: action.payload.isTrue };
-        case constants.ERROR_DATA:
-            return { ...state, errorData: action.payload.errData };
-        case constants.SET_URI:
-            return { ...state, sharedUri: action.payload.image };
-        case constants.SET_FORGOT_PASSWORD:
-            return { ...state, forgotPassword: action.payload.data };
         case constants.SAVE_TOKEN:
             return { ...state, accessToken: action.payload.accessToken, refreshToken: action.payload.refreshToken, hasSetPassword: action.payload.hasSetPassword  };
         case constants.SAVE_CONFIRM_TYPE:

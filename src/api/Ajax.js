@@ -31,7 +31,7 @@ export default class ajax {
     }
     send() {
         const token = `Bearer ${store.getState().authReducer.accessToken}`;
-        const baseUrl = get(store.getState().authReducer, 'baseUrl', constants.BASE_API_URL);
+        const baseUrl = constants.BASE_API_URL;
         const computeHeaderOption = {
             url: baseUrl,
             method: this.method,
