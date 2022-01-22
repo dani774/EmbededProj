@@ -15,7 +15,7 @@ import {
 import {P} from '../react-native-override';
 import * as formActions from '../Form/actions';
 import getLanguage from '../../utils/detectLanguage';
-import Message from "../message/Message";
+import Message from '../message/Message';
 import translations from './translations/fa.json';
 class Form extends Component {
   constructor(props) {
@@ -24,16 +24,16 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    const { navigation, clearDataAfterSubmit=false } = this.props;
-    if(navigation) {
+    const {navigation, clearDataAfterSubmit = false} = this.props;
+    if (navigation) {
       this.unsubscribeFocus = navigation.addListener('focus', () => {
         this.clearErrors();
       });
       this.unsubscribeBlur = navigation.addListener('blur', () => {
         this.clearErrors();
         // clear sensitive data after use that (MSTG-STORAGE‑10)
-        if(clearDataAfterSubmit) {
-          const { fields } = this.props;
+        if (clearDataAfterSubmit) {
+          const {fields} = this.props;
           // fill all inputs with empty string even user didnt touch the input
           let Data = {};
           Object.keys(fields).map(key => {
@@ -47,18 +47,17 @@ class Form extends Component {
           });
           Data = {...Data, ...this.state};
 
-
-          Object.keys(Data).map((keyElement) => {
-              this.setState({ [keyElement] : ''})
-          })
+          Object.keys(Data).map(keyElement => {
+            this.setState({[keyElement]: ''});
+          });
         }
       });
     }
   }
 
   componentWillUnmount() {
-    const { navigation } = this.props;
-    if(navigation) {
+    const {navigation} = this.props;
+    if (navigation) {
       this.unsubscribeFocus();
       this.unsubscribeBlur();
     }
@@ -69,28 +68,29 @@ class Form extends Component {
     Object.keys(nextProps.fields).map(key => {
       const newDefaultValue = nextProps.fields[key]?.defaultValue;
       const oldDefaultValue = this.props.fields[key]?.defaultValue;
-       
-      if(newDefaultValue && oldDefaultValue !== newDefaultValue) {
-        this.handleInputs(newDefaultValue, key)
+
+      if (newDefaultValue && oldDefaultValue !== newDefaultValue) {
+        this.handleInputs(newDefaultValue, key);
       }
-    })
+    });
   }
 
   clearErrors = () => {
-    const { setErrors } = this.props;
+    const {setErrors} = this.props;
     setErrors([], {});
-  }
+  };
 
   // set the inputs value in form state, base on input name
   handleInputs = (value, filedName) => {
-    if(filedName === 'mobile') {
-      if(String(value).length <= 11) { // prevent insert more than 11 numbers in 'mobile' fileds
+    if (filedName === 'mobile') {
+      if (String(value).length <= 11) {
+        // prevent insert more than 11 numbers in 'mobile' fileds
         this.setState({
           [filedName]: value,
         });
       }
-    } else if(filedName === 'username' || filedName === 'email') {
-      if(getLanguage(value[value.length-1]) === 'en') {
+    } else if (filedName === 'username' || filedName === 'email') {
+      if (getLanguage(value[value.length - 1]) === 'en') {
         this.setState({
           [filedName]: value,
         });
@@ -104,7 +104,7 @@ class Form extends Component {
 
   // send all inputs data to the parent submit handler
   handleSubmit = () => {
-    const {submitButton, fields } = this.props;
+    const {submitButton, fields} = this.props;
     // fill all inputs with empty string even user didnt touch the input
     let canSubmit = true;
     let Data = {};
@@ -122,22 +122,22 @@ class Form extends Component {
     const errorDetails = {};
     Object.keys(fields).map(key => {
       if (key === 'doubleFields') {
-
       } else {
-        if(fields[key].name === 'phone') {
+        if (fields[key].name === 'phone') {
           const phoneRegex = /^09[0-9]{9}$/;
-          if(!phoneRegex.test(this.state[key])) {
+          if (!phoneRegex.test(this.state[key])) {
             canSubmit = false; // prevent to execute submit of parent
 
             reportedErrors.push(key);
             errorDetails[key] = translations['form.phoneFormat.error'];
           }
         } else if (fields[key].name === 'email') {
-          const emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})\s*)$/;
-          if(!fields[key].nonRequirement || this.state[key]) {
-            if(!emailRegex.test(this.state[key])) {
+          const emailRegex =
+            /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})\s*)$/;
+          if (!fields[key].nonRequirement || this.state[key]) {
+            if (!emailRegex.test(this.state[key])) {
               canSubmit = false; // prevent to execute submit of parent
-  
+
               reportedErrors.push(key);
               errorDetails[key] = translations['form.emailFormat.error'];
             }
@@ -146,7 +146,7 @@ class Form extends Component {
       }
     });
     this.props.setErrors(reportedErrors, errorDetails);
-    if(canSubmit) {
+    if (canSubmit) {
       this.props.setErrors([], {});
       submitButton.submitHandler(Data);
     }
@@ -183,45 +183,45 @@ class Form extends Component {
 
     return (
       <View style={{...formStyle}}>
-          <View>
-            {/* <KeyboardAwareScrollView> */}
-              <RenderInputs
-                fields={fields}
-                handleInputs={this.handleInputs}
-                backendErrorDetail={backendErrorDetail}
-                {...this.state}
-              />
-              {backendErrorDetail.non_field_errors ? (
-                <P size={15} style={styles.errorMessage}>
-                  {backendErrorDetail.non_field_errors}
-                </P>
-              ) : null}
-            {/* </KeyboardAwareScrollView> */}
-          </View>
-          {middleText ? (
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexGrow: 1,
-              }}>
-              {middleText}
-            </View>
-          ) : null}
-          <RenderSubmit
-            doubleButtons={doubleButtons}
-            submitButton={submitButton}
-            cancelButton={cancelButton}
-            handleSubmit={this.handleSubmit}
+        <View>
+          {/* <KeyboardAwareScrollView> */}
+          <RenderInputs
+            fields={fields}
+            handleInputs={this.handleInputs}
+            backendErrorDetail={backendErrorDetail}
+            {...this.state}
           />
+          {backendErrorDetail.non_field_errors ? (
+            <P size={15} style={styles.errorMessage}>
+              {backendErrorDetail.non_field_errors}
+            </P>
+          ) : null}
+          {/* </KeyboardAwareScrollView> */}
         </View>
+        {middleText ? (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              flexGrow: 1,
+            }}>
+            {middleText}
+          </View>
+        ) : null}
+        <RenderSubmit
+          doubleButtons={doubleButtons}
+          submitButton={submitButton}
+          cancelButton={cancelButton}
+          handleSubmit={this.handleSubmit}
+        />
+      </View>
     );
   }
 }
 
 // component that return all inputs of form
 const RenderInputs = props => {
-  const {fields, handleInputs, backendErrorDetail,handleSubmit} = props;
+  const {fields, handleInputs, backendErrorDetail, handleSubmit} = props;
   let inputs = [];
   let list = [];
   const switcher = (obj, key) => {
@@ -272,12 +272,12 @@ const RenderInputs = props => {
               onValueChange={(value, index) => handleInputs(value, key)}
               selectedValue={props[key] ? props[key] : obj[key].defaultValue}>
               {
-                Object.keys(obj[key].data).map(dkey => {
+                (Object.keys(obj[key].data).map(dkey => {
                   list.push(
                     <Picker.Item label={obj[key].data[dkey]} value={dkey} />,
                   );
                 }),
-                list
+                list)
               }
             </CustomPicker>
           </View>
@@ -356,13 +356,15 @@ const RenderSubmit = props => {
           color:
             submitButton.style && submitButton.style.color
               ? submitButton.style.color
-              : disableButton ? 'white' : '#181923',
+              : disableButton
+              ? 'white'
+              : '#181923',
         }}
         onPress={
           !disableButton
             ? handleSubmit
             : () => {
-                Message('normal', translations['form.fillTheBlank'], true)
+                Message('normal', translations['form.fillTheBlank'], true);
               }
         }
         loading={submitButton.loading}>
@@ -430,7 +432,4 @@ const mapStateToProps = state => ({
   backendErrorDetail: get(state.FormReducer, 'errorDetail', []),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Form);
+export default connect(mapStateToProps, mapDispatchToProps)(Form);

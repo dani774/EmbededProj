@@ -1,9 +1,8 @@
-import { call, takeEvery } from 'redux-saga/effects';
-import { store } from '../../store/ConfigureStore';
+import {call, takeEvery} from 'redux-saga/effects';
+import {store} from '../../store/ConfigureStore';
 import * as constants from './constants';
 import Ajax from '../../api/Ajax';
 import * as actions from './actions';
-
 
 function* Login(action) {
     const { email, password } = action.payload.data;
@@ -43,17 +42,12 @@ function* SignUp(action) {
     );
 }
 
-
 function* loginSaga() {
-    yield takeEvery(constants.LOGIN, Login);
+  yield takeEvery(constants.LOGIN, Login);
 }
 
 function* signUpSaga() {
-    yield takeEvery(constants.SIGNUP, SignUp);
+  yield takeEvery(constants.SIGNUP, SignUp);
 }
 
-
-export default [
-    loginSaga(),
-    signUpSaga(),
-]
+export default [loginSaga(), signUpSaga()];
