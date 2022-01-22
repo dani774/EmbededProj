@@ -25,8 +25,8 @@ const storage = createSensitiveStorage({
 
 // set all reducers as RootReducer
 const appReducer = combineReducers({
-
   FormReducer,
+  authReducer,
 });
 
 const sagas = function*() {

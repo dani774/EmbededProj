@@ -39,7 +39,7 @@ export default class ajax {
             config: this.config,
             timeout: this.timeout || 10000,
             headers: {
-                Authorization: token,
+                Authorization: token || null,
             },
         };
         const noToken = {
@@ -56,7 +56,7 @@ export default class ajax {
             config: this.config,
             timeout: this.timeout || 10000,
             headers: {
-                Authorization: token,
+                Authorization: token || null,
             },
         };
         const options =

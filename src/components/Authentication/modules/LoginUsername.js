@@ -51,6 +51,7 @@ class LoginUsername extends Component {
         const data = {
             ...value,
         }
+        console.log('do you come?', data);
         loginAction(data);
     };
     render() {

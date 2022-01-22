@@ -2,20 +2,24 @@ import { call, takeEvery } from 'redux-saga/effects';
 import { store } from '../../store/ConfigureStore';
 import * as constants from './constants';
 import Ajax from '../../api/Ajax';
+import * as actions from './actions';
 
 
 function* Login(action) {
-    const { username, password } = action.payload.data;
+    const { email, password } = action.payload.data;
+    const username = email;
     const body = {username, password};
     yield call(() =>
         new Ajax({
             success: response => {
+                store.dispatch(actions.saveToken(response.data.accessToken, response.data.refreshToken))
             },
             error: err => {
             }
         })
             .setMethod('post')
             .setUrl(constants.AUTH_URL_LOGIN)
+            .setEvent('noToken')
             .setData(body)
             .send(),
     );
@@ -32,7 +36,7 @@ function* SignUp(action) {
             }
         })
             .setMethod('post')
-            .setUrl(constants.AUTH_URL_LOGIN)
+            .setUrl(constants.AUTH_URL_SIGNUP)
             .setData(body)
             .setEvent('noToken')
             .send(),

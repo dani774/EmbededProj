@@ -16,4 +16,12 @@ export const signUp = values => ({
   },
 });
 
+export const saveToken = (accessToken, refreshToken) => ({
+  type: constants.SAVE_TOKEN,
+  payload: {
+    accessToken,
+    refreshToken,
+  },
+});
+
 
