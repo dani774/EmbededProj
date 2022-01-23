@@ -1,13 +1,13 @@
-import {applyMiddleware, combineReducers, createStore} from 'redux';
+import { applyMiddleware, combineReducers, createStore } from 'redux';
 import createSensitiveStorage from 'redux-persist-sensitive-storage';
-import {persistReducer, persistStore} from 'redux-persist';
+import { persistReducer, persistStore } from 'redux-persist';
 import createSagaMiddleware from 'redux-saga';
 import authSagas from '../components/Authentication/sagas';
 import authReducer from '../components/Authentication/reducer';
 // Form
 import FormReducer from '../UI-Components/Form/reducer';
 import FormSagas from '../UI-Components/Form/sagas';
-import {AsyncStorage} from 'react-native';
+import { AsyncStorage } from 'react-native';
 import * as constants from './constants';
 // import {createLogger} from 'redux-logger';
 
@@ -29,11 +29,8 @@ const appReducer = combineReducers({
   authReducer,
 });
 
-const sagas = function*() {
-  yield [
-    ...authSagas,
-    ...FormSagas,
-  ];
+const sagas = function* () {
+  yield [...authSagas, ...FormSagas];
 };
 
 const RootReducer = (state, action) => {
@@ -54,8 +51,8 @@ const persistedReducer = persistReducer(persistConfig, RootReducer);
 // export store with persistedReducer
 export const store =
   // constants.NODE !== 'PRODUCTION'
-    // ? createStore(persistedReducer, applyMiddleware(sagaMiddleware, logger)):
-    createStore(persistedReducer, applyMiddleware(sagaMiddleware));
+  // ? createStore(persistedReducer, applyMiddleware(sagaMiddleware, logger)):
+  createStore(persistedReducer, applyMiddleware(sagaMiddleware));
 
 sagaMiddleware.run(sagas);
 

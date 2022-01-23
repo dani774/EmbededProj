@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -8,13 +8,13 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {get} from 'lodash';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { get } from 'lodash';
 import * as actions from '../actions';
 import translation from '../translations/fa.json';
 import Form from '../../../UI-Components/Form/Form';
-import {P} from '../../../UI-Components/react-native-override';
+import { P } from '../../../UI-Components/react-native-override';
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -22,11 +22,13 @@ import {
 import * as constants from '../constants';
 import Input from '../../../UI-Components/Input/Input';
 
-
 class SignUp extends Component {
+  mounted = React.createRef();
+
   constructor(props) {
     super(props);
 
+    this.mounted.current = true;
     this.state = {
       keyboardShown: false,
     };
@@ -50,42 +52,51 @@ class SignUp extends Component {
   componentWillUnmount() {
     this.keyboardDidShowListener.remove();
     this.keyboardDidHideListener.remove();
+    this.mounted.current = false;
   }
 
   _keyboardDidShow = () => {
+    if (!this.mounted.current) return;
     this.setState({
       keyboardShown: true,
     });
   };
 
   _keyboardDidHide = () => {
+    if (!this.mounted.current) return;
     this.setState({
       keyboardShown: false,
     });
   };
 
   handleSignUp = values => {
-    const {signUp} = this.props;
+    const { signUp } = this.props;
     console.log('valueeee', values);
-    signUp(values)
+    signUp(values);
   };
 
-  handleSuceessSuccessOTP = async data => {
-  }
+  handleSuceessSuccessOTP = async data => {};
 
   render() {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     const { keyboardShown } = this.state;
     return (
-      <ScrollView scrollEnabled={keyboardShown} keyboardShouldPersistTaps='handled'>
+      <ScrollView
+        scrollEnabled={keyboardShown}
+        keyboardShouldPersistTaps="handled">
         <View style={styles.mainContainer}>
           <View style={styles.headerContainer}>
-            <P.Bold style={{...styles.title, fontSize: 32}}>
+            <P.Bold style={{ ...styles.title, fontSize: 32 }}>
               {translation['signup.header.title']}
             </P.Bold>
           </View>
-          <View style={keyboardShown ? {...styles.formContainer, minHeight: '100%' } : {...styles.formContainer}}>
-            <ScrollView keyboardShouldPersistTaps='handled'>
+          <View
+            style={
+              keyboardShown
+                ? { ...styles.formContainer, minHeight: '100%' }
+                : { ...styles.formContainer }
+            }>
+            <ScrollView keyboardShouldPersistTaps="handled">
               <Form
                 navigation={navigation}
                 fields={{
@@ -155,10 +166,12 @@ class SignUp extends Component {
                     keyboardType: 'numeric',
                     placeholder: translation['weight'],
                   },
-
                 }}
                 submitButton={{
-                  loading: {url: constants.REQUEST_OTP_URL, requestType: 'post'},
+                  loading: {
+                    url: constants.REQUEST_OTP_URL,
+                    requestType: 'post',
+                  },
                   text: translation['form.confirmSignUp'],
                   submitHandler: value => this.handleSignUp(value),
                 }}
@@ -214,7 +227,7 @@ const styles = StyleSheet.create({
   formFooter: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: hp('3.5%')
+    marginBottom: hp('3.5%'),
   },
   formFooterLink: {
     marginRight: 8,
@@ -228,7 +241,7 @@ const styles = StyleSheet.create({
   mainFooter: {
     borderTopColor: '#9597ab33',
     borderTopWidth: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     width: '100%',
     paddingTop: hp('3.2%'),
     paddingBottom: hp('5.3%'),
@@ -255,7 +268,4 @@ const mapStateToProps = state => ({
   token: get(state, 'authReducer.token', ''),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
