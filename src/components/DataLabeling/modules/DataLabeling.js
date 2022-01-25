@@ -17,10 +17,15 @@ import {
   heightPercentageToDP as hp,
   widthPercentageToDP as wp,
 } from 'react-native-responsive-screen';
-import { P } from '../../../UI-Components/react-native-override';
+import {
+  P,
+  Icon64,
+  Icon24,
+  Icon16,
+} from '../../../UI-Components/react-native-override';
 import * as constants from '../constants';
 
-class LoginUsername extends Component {
+class DataLabeling extends Component {
   mounted = React.createRef();
 
   constructor(props) {
@@ -61,15 +66,6 @@ class LoginUsername extends Component {
       keyboardShown: false,
     });
   };
-  handleLoginUsername = value => {
-    // const { loginAction } = this.props;
-    // const data = {
-    //   ...value,
-    // };
-    // loginAction(data);
-    const { navigation } = this.props;
-    navigation.navigate('DataLabeling');
-  };
 
   render() {
     const { navigation } = this.props;
@@ -80,9 +76,13 @@ class LoginUsername extends Component {
         keyboardShouldPersistTaps="handled">
         <View style={styles.mainContainer}>
           <View style={styles.headerContainer}>
-            <P.Bold style={styles.title} size={32}>
-              {translation['loginPhonenumber.header.title']}
-            </P.Bold>
+            <Icon64
+              source={require('../assets/images/iot.png')}
+              style={styles.middleIcon}
+            />
+            {/* <P.Bold style={styles.title} size={32}>
+              {translation['dataLabeling.test']}
+            </P.Bold> */}
           </View>
           <View
             style={
@@ -94,43 +94,33 @@ class LoginUsername extends Component {
               <Form
                 navigation={navigation}
                 fields={{
-                  username: {
-                    name: 'username',
-                    label: translation['form.phoneNumber.label'],
-                    type: 'input',
+                  activityLabel: {
+                    name: 'activityLabel',
+                    label: translation['activityLabel'],
+                    type: 'select',
+                    defaultValue: 1,
+                    data: {
+                      1: 'test',
+                      2: 'hello',
+                      3: 'hi',
+                    },
                     size: 'large',
-                    placeholder: translation['form.phoneNumber.placeholder'],
-                  },
-                  password: {
-                    name: 'password',
-                    label: translation['form.password.label'],
-                    type: 'input',
-                    size: 'large',
-                    textAlign: 'left',
-                    placeholder: translation['password'],
-                    secureTextEntry: true,
+                    mode: 'dialog',
                   },
                 }}
                 submitButton={{
-                  loading: { url: constants.AUTH_URL, requestType: 'post' },
-                  text: translation['form.confirmLogin'],
-                  submitHandler: value => this.handleLoginUsername(value),
+                  loading: { url: constants.TEST, requestType: 'post' },
+                  text: translation['dataLabeling.test'],
+                  submitHandler: value => {
+                    console.log(value);
+                  },
                   style: { marginBottom: hp('6.2%') },
                 }}
                 clearDataAfterSubmit={true}
               />
             </ScrollView>
           </View>
-          <View style={{ ...styles.formFooter }}>
-            <TouchableOpacity onPress={() => navigation.navigate('Signup')}>
-              <P.Bold size={18} style={{ ...styles.formFooterLink }}>
-                {translation['loginPhoneNumber.formFooter.link']}
-              </P.Bold>
-            </TouchableOpacity>
-            <P size={18} style={{ ...styles.formFooterDesc }}>
-              {translation['loginPhoneNumber.formFooter.desc']}
-            </P>
-          </View>
+          <View style={{ ...styles.formFooter }}></View>
         </View>
       </ScrollView>
     );
@@ -143,9 +133,12 @@ const styles = StyleSheet.create({
     height: Dimensions.get('window').width < 380 ? hp('96%') : hp('100%'),
   },
   headerContainer: {
-    justifyContent: 'center',
-    marginTop: hp('10.7%'),
-    marginBottom: hp('7.1%'),
+    marginTop: hp(3),
+  },
+  middleIcon: {
+    alignSelf: 'center',
+    width: wp(40),
+    height: hp(20),
   },
   title: {
     textAlign: 'center',
@@ -195,16 +188,11 @@ const styles = StyleSheet.create({
 });
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      loginAction: actions.Login,
-    },
-    dispatch,
-  );
+  return bindActionCreators({}, dispatch);
 }
 
 const mapStateToProps = state => ({
-  token: get(state, 'authReducer.token', ''),
+  //   token: get(state, 'authReducer.token', ''),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginUsername);
+export default connect(mapStateToProps, mapDispatchToProps)(DataLabeling);

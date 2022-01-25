@@ -1,8 +1,10 @@
-import React, {Component} from 'react';
-import {View, StyleSheet, Picker} from 'react-native';
-import {connect} from 'react-redux';
-import {bindActionCreators} from 'redux';
-import {get} from 'lodash';
+import React, { Component } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { get } from 'lodash';
+import { Picker } from '@react-native-picker/picker';
+
 import Input from '../Input/Input';
 import Button from '../../UI-Components/Button';
 import PartitionInput from './modules/PartitionInput';
@@ -12,7 +14,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {P} from '../react-native-override';
+import { P } from '../react-native-override';
 import * as formActions from '../Form/actions';
 import getLanguage from '../../utils/detectLanguage';
 import Message from '../message/Message';
@@ -24,7 +26,7 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    const {navigation, clearDataAfterSubmit = false} = this.props;
+    const { navigation, clearDataAfterSubmit = false } = this.props;
     if (navigation) {
       this.unsubscribeFocus = navigation.addListener('focus', () => {
         this.clearErrors();
@@ -33,7 +35,7 @@ class Form extends Component {
         this.clearErrors();
         // clear sensitive data after use that (MSTG-STORAGE‑10)
         if (clearDataAfterSubmit) {
-          const {fields} = this.props;
+          const { fields } = this.props;
           // fill all inputs with empty string even user didnt touch the input
           let Data = {};
           Object.keys(fields).map(key => {
@@ -45,10 +47,10 @@ class Form extends Component {
               Data[key] = '';
             }
           });
-          Data = {...Data, ...this.state};
+          Data = { ...Data, ...this.state };
 
           Object.keys(Data).map(keyElement => {
-            this.setState({[keyElement]: ''});
+            this.setState({ [keyElement]: '' });
           });
         }
       });
@@ -56,7 +58,7 @@ class Form extends Component {
   }
 
   componentWillUnmount() {
-    const {navigation} = this.props;
+    const { navigation } = this.props;
     if (navigation) {
       this.unsubscribeFocus();
       this.unsubscribeBlur();
@@ -76,7 +78,7 @@ class Form extends Component {
   }
 
   clearErrors = () => {
-    const {setErrors} = this.props;
+    const { setErrors } = this.props;
     setErrors([], {});
   };
 
@@ -104,7 +106,7 @@ class Form extends Component {
 
   // send all inputs data to the parent submit handler
   handleSubmit = () => {
-    const {submitButton, fields} = this.props;
+    const { submitButton, fields } = this.props;
     // fill all inputs with empty string even user didnt touch the input
     let canSubmit = true;
     let Data = {};
@@ -117,7 +119,7 @@ class Form extends Component {
         Data[key] = '';
       }
     });
-    Data = {...Data, ...this.state};
+    Data = { ...Data, ...this.state };
     const reportedErrors = [];
     const errorDetails = {};
     Object.keys(fields).map(key => {
@@ -182,7 +184,7 @@ class Form extends Component {
     }
 
     return (
-      <View style={{...formStyle}}>
+      <View style={{ ...formStyle }}>
         <View>
           {/* <KeyboardAwareScrollView> */}
           <RenderInputs
@@ -221,7 +223,7 @@ class Form extends Component {
 
 // component that return all inputs of form
 const RenderInputs = props => {
-  const {fields, handleInputs, backendErrorDetail, handleSubmit} = props;
+  const { fields, handleInputs, backendErrorDetail, handleSubmit } = props;
   let inputs = [];
   let list = [];
   const switcher = (obj, key) => {
@@ -266,8 +268,10 @@ const RenderInputs = props => {
         return (
           <View style={styles.inputContainer}>
             <CustomPicker
-              style={{height: wp('10%') + 10}}
-              mode="dropdown"
+              style={{
+                color: 'black',
+              }}
+              mode={obj[key].mode}
               errorMessage={backendErrorDetail[key]}
               onValueChange={(value, index) => handleInputs(value, key)}
               selectedValue={props[key] ? props[key] : obj[key].defaultValue}>
@@ -293,14 +297,15 @@ const RenderInputs = props => {
       if (key === 'doubleFields') {
         Object.keys(fields.doubleFields).map(dkey => {
           doubleFields.push(
-            <View style={{width: '45%'}}>
+            <View style={{ width: '45%' }}>
               {switcher(fields.doubleFields, dkey)}
             </View>,
           );
         });
 
         inputs.push(
-          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View
+            style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
             {doubleFields}
           </View>,
         );
@@ -316,13 +321,13 @@ const RenderInputs = props => {
 
 // component of Submit buttons of form
 const RenderSubmit = props => {
-  const {doubleButtons, submitButton, cancelButton, handleSubmit} = props;
-  const {disableButton = false} = submitButton;
+  const { doubleButtons, submitButton, cancelButton, handleSubmit } = props;
+  const { disableButton = false } = submitButton;
   return doubleButtons ? (
     <View style={styles.doubleSubmitContainer}>
       <Button
         icon={submitButton.icon ? submitButton.icon : null}
-        style={{...styles.doubleButtonSubmit, ...submitButton.style}}
+        style={{ ...styles.doubleButtonSubmit, ...submitButton.style }}
         loading={submitButton.loading}
         textStyle={{
           color:
@@ -337,8 +342,8 @@ const RenderSubmit = props => {
       <Button
         icon={cancelButton.icon ? submitButton.icon : null}
         loading={submitButton.loading}
-        style={{...styles.doubleButtonCancel, ...cancelButton.style}}
-        textStyle={{color: '#9597AB', ...styles.doubleButtonsText}}
+        style={{ ...styles.doubleButtonCancel, ...cancelButton.style }}
+        textStyle={{ color: '#9597AB', ...styles.doubleButtonsText }}
         onPress={cancelButton.cancelHandler}>
         {cancelButton.text}
       </Button>
