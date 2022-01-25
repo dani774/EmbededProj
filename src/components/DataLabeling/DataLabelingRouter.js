@@ -4,8 +4,9 @@ import { Stack } from '../MainNavigator/navigation';
 import SignUp from './modules/SignUp';
 import LoginUsername from './modules/LoginUsername';
 import { CardStyleInterpolators } from '@react-navigation/stack';
+import DataLabeling from './modules/DataLabeling';
 
-export function AuthenticationStackScreen(props) {
+export function DataLabelingStackScreen(props) {
   const screenOption = {
     headerShown: false,
     cardStyleInterpolator: CardStyleInterpolators.forVerticalIOS,
@@ -13,11 +14,10 @@ export function AuthenticationStackScreen(props) {
   };
   return (
     <>
-      <Stack.Screen name="Signup" options={screenOption} component={SignUp} />
       <Stack.Screen
-        name="LoginUsername"
+        name="DataLabeling"
         options={screenOption}
-        component={LoginUsername}
+        component={DataLabeling}
       />
     </>
   );
