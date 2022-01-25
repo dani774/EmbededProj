@@ -120,7 +120,6 @@ class DataLabeling extends Component {
               />
             </ScrollView>
           </View>
-          <View style={{ ...styles.formFooter }}></View>
         </View>
       </ScrollView>
     );

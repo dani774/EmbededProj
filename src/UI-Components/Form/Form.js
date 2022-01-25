@@ -267,6 +267,11 @@ const RenderInputs = props => {
       case 'select':
         return (
           <View style={styles.inputContainer}>
+            <P.Bold
+              size="small"
+              style={{ marginBottom: hp(1), marginRight: hp(0.5) }}>
+              {obj[key].label}
+            </P.Bold>
             <CustomPicker
               style={{
                 color: 'black',
