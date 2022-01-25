@@ -1,6 +1,5 @@
 import React, { Component, Children } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import {
@@ -23,12 +22,12 @@ class CustomPicker extends Component {
             errorMessage ? ErrorStyles.container : passiveStyles.container
           }>
           <View>
-            <Picker
+            {/* <Picker
               textStyle={{ fontSize: wp('4%') }}
               style={{ height: wp('13%') }}
               {...this.props}>
               {this.props.children}
-            </Picker>
+            </Picker> */}
           </View>
         </View>
         {errorMessage ? (

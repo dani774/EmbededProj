@@ -62,13 +62,11 @@ class LoginUsername extends Component {
     });
   };
   handleLoginUsername = value => {
-    // const { loginAction } = this.props;
-    // const data = {
-    //   ...value,
-    // };
-    // loginAction(data);
-    const { navigation } = this.props;
-    navigation.navigate('DataLabeling');
+    const { loginAction } = this.props;
+    const data = {
+      ...value,
+    };
+    loginAction(data);
   };
 
   render() {
@@ -94,8 +92,8 @@ class LoginUsername extends Component {
               <Form
                 navigation={navigation}
                 fields={{
-                  username: {
-                    name: 'username',
+                  email: {
+                    name: 'email',
                     label: translation['form.phoneNumber.label'],
                     type: 'input',
                     size: 'large',

@@ -3,12 +3,11 @@ import { View, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { get } from 'lodash';
-import { Picker } from '@react-native-picker/picker';
 
 import Input from '../Input/Input';
 import Button from '../../UI-Components/Button';
 import PartitionInput from './modules/PartitionInput';
-import CustomPicker from '../customPicker/CustomPicker';
+import CustomPicker from '../customPicker/CustomPicker2';
 import CustomDatePicker from '../../UI-Components/Form/modules/CustomDatePicker';
 import {
   widthPercentageToDP as wp,
@@ -283,7 +282,7 @@ const RenderInputs = props => {
               {
                 (Object.keys(obj[key].data).map(dkey => {
                   list.push(
-                    <Picker.Item label={obj[key].data[dkey]} value={dkey} />,
+                    // <Picker.Item label={obj[key].data[dkey]} value={dkey} />,
                   );
                 }),
                 list)

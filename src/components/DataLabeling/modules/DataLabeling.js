@@ -97,7 +97,7 @@ class DataLabeling extends Component {
                   activityLabel: {
                     name: 'activityLabel',
                     label: translation['activityLabel'],
-                    type: 'select',
+                    type: 'input',
                     defaultValue: 1,
                     data: {
                       1: 'test',

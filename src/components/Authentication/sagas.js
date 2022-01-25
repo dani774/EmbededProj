@@ -3,6 +3,7 @@ import { store } from '../../store/ConfigureStore';
 import * as constants from './constants';
 import Ajax from '../../api/Ajax';
 import * as actions from './actions';
+import * as RootNavigation from '../MainNavigator/RootNavigation'
 
 function* Login(action) {
   const { email, password } = action.payload.data;
@@ -13,10 +14,14 @@ function* Login(action) {
       success: response => {
         store.dispatch(
           actions.saveToken(
-            response.data.accessToken,
-            response.data.refreshToken,
+            response.data.access,
+            response.data.refresh,
           ),
         );
+        RootNavigation.reset({
+          index: 0,
+          routes: [{ name: "DataLabeling" }],
+        })
       },
       error: err => {},
     })
@@ -42,18 +47,21 @@ function* SignUp(action) {
   } = action.payload.values;
   const body = {
     age,
-    bloodType,
+    blood_type: bloodType,
     email,
-    firstName,
+    first_name: firstName,
     gender,
     height,
-    lastName,
+    last_name: lastName,
     password,
     weight,
+    username: email
   };
   yield call(() =>
     new Ajax({
-      success: response => {},
+      success: response => {
+        RootNavigation.navigate('LoginUsername')
+      },
       error: err => {},
     })
       .setMethod('post')

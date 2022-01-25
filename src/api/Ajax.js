@@ -3,6 +3,8 @@ import { store } from '../store/ConfigureStore';
 import * as constants from './constants';
 import NetInfo from '@react-native-community/netinfo';
 import { get } from 'lodash';
+import Message from '../../src/UI-Components/message/Message';
+
 
 export default class Ajax {
   static canShowMessage = true;
@@ -15,7 +17,7 @@ export default class Ajax {
     this.config = params.config || {};
     this.token = params.token || '';
 
-    this.success = res => {
+    this.success = (res) => {
       if (this.loading === true) {
         window.ajaxInstanceRun--;
       }
@@ -25,8 +27,13 @@ export default class Ajax {
           params.success(res);
         }
       }
+      console.log('respspsps', res);
+      Message('normal', res)
     };
-    this.error = error => {};
+    this.error = (error) => {
+      console.log('respspsps', error);
+      Message('normal', 'نام کاربری و یا رمز عبور نادرست است', true)
+    };
   }
   send() {
     const token = `Bearer ${store.getState().authReducer.accessToken}`;
