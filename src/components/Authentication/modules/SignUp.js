@@ -71,7 +71,6 @@ class SignUp extends Component {
 
   handleSignUp = values => {
     const { signUp } = this.props;
-    console.log('valueeee', values);
     signUp(values);
   };
 

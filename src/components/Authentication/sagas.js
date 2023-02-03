@@ -6,8 +6,8 @@ import * as actions from './actions';
 import * as RootNavigation from '../MainNavigator/RootNavigation'
 
 function* Login(action) {
-  const { email, password } = action.payload.data;
-  const username = email;
+  const { username, password } = action.payload.data;
+  // const username = email;
   const body = { username, password };
   yield call(() =>
     new Ajax({
@@ -60,7 +60,7 @@ function* SignUp(action) {
   yield call(() =>
     new Ajax({
       success: response => {
-        RootNavigation.navigate('LoginUsername')
+        RootNavigation.navigate('LoginUsername');
       },
       error: err => {},
     })

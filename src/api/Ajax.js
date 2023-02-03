@@ -27,7 +27,6 @@ export default class Ajax {
           params.success(res);
         }
       }
-      console.log('respspsps', res);
       Message('normal', res)
     };
     this.error = (error) => {

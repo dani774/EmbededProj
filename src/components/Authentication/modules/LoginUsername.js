@@ -92,8 +92,8 @@ class LoginUsername extends Component {
               <Form
                 navigation={navigation}
                 fields={{
-                  email: {
-                    name: 'email',
+                  username: {
+                    name: 'username',
                     label: translation['form.phoneNumber.label'],
                     type: 'input',
                     size: 'large',
